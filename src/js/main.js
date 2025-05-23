@@ -64,24 +64,86 @@ function initializeNavigation() {
     });
 }
 
-// JavaScript logic for Featured Works hover effect
-function initializeFeaturedWorksHover() {
-    if (!featuredGrid) return;
-
+// Replace featured works hover logic with grid/accordion logic
+if (featuredGrid) {
     const items = featuredGrid.querySelectorAll('.featured-item');
+    let lastActiveIndex = 0; // Variable to store the index of the last active item
 
-    items.forEach(item => {
-        item.addEventListener('mouseenter', () => {
+    const setIndex = (event) => {
+        const closest = event.target.closest('.featured-item');
+        if (closest) {
+            const index = [...items].indexOf(closest);
+            lastActiveIndex = index; // Store the current active index
+
+            // Toggle .is-active class on the grid when an item is hovered/clicked
             featuredGrid.classList.add('is-active');
-            items.forEach(i => i.classList.remove('is-hovered'));
-            item.classList.add('is-hovered');
-        });
-    });
 
+            items.forEach((item, i) => {
+                item.dataset.active = (index === i).toString();
+                // Toggle .is-hovered class on the currently hovered/clicked item
+                item.classList.toggle('is-hovered', index === i);
+                // Remove .is-default-open class on hover/click
+                item.classList.remove('is-default-open');
+            });
+
+            const cols = new Array(items.length)
+                .fill()
+                .map((_, i) => {
+                    return index === i ? '10fr' : '1fr';
+                })
+                .join(' ');
+            featuredGrid.style.setProperty('grid-template-columns', cols);
+        }
+    };
+    featuredGrid.addEventListener('focus', setIndex, true);
+    featuredGrid.addEventListener('click', setIndex);
+    featuredGrid.addEventListener('pointermove', setIndex);
+
+    // Add event listener for mouseleave to remove classes and reset grid
     featuredGrid.addEventListener('mouseleave', () => {
         featuredGrid.classList.remove('is-active');
-        items.forEach(item => item.classList.remove('is-hovered'));
+        items.forEach((item, i) => {
+            item.classList.remove('is-hovered');
+            item.classList.remove('is-default-open'); // Ensure default is removed on mouseleave
+            item.dataset.active = 'false';
+        });
+        // Re-apply is-default-open to the last active item after mouseleave
+         items.forEach((item, i) => {
+            if (i === lastActiveIndex) { // Use lastActiveIndex here
+                item.classList.add('is-default-open');
+                 item.dataset.active = 'true';
+            } else {
+                 item.dataset.active = 'false';
+            }
+         });
+         // Recalculate grid columns based on lastActiveIndex
+         const cols = new Array(items.length)
+                .fill()
+                .map((_, i) => {
+                    return i === lastActiveIndex ? '10fr' : '1fr'; // Use lastActiveIndex here
+                })
+                .join(' ');
+         featuredGrid.style.setProperty('grid-template-columns', cols);
     });
+
+    const resync = () => {
+        const w = Math.max(
+            ...[...items].map((i) => {
+                return i.offsetWidth;
+            })
+        );
+        featuredGrid.style.setProperty('--article-width', w);
+    };
+    window.addEventListener('resize', resync);
+    resync();
+    // Set initial state
+    items.forEach((item, i) => {
+        item.dataset.active = i === 0 ? 'true' : 'false';
+        if (i === 0) {
+            item.classList.add('is-default-open');
+        }
+    });
+    featuredGrid.style.setProperty('grid-template-columns', ['10fr'].concat(new Array(items.length - 1).fill('1fr')).join(' '));
 }
 
 // Contact form handling

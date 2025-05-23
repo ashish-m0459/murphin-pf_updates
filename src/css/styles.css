@@ -42,6 +42,7 @@ h1 {
     font-size: 3.5rem;
     margin-bottom: 1.5rem;
     text-transform: uppercase;
+    position: relative;
 }
 
 h2 {
@@ -412,48 +413,37 @@ aspect-ratio: 3/4;
 }
 
 .featured-grid {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 0;
+    display: grid;
+    grid-template-columns: 10fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 8px;
+    list-style-type: none;
+    justify-content: center;
+    padding: 0;
+    height: clamp(600px, 40dvh, 474px);
     margin: 2rem auto;
     max-width: 1200px;
-    justify-content: center;
-    height: 410px;
+    width: 60%;
+    max-width: calc(100% - 4rem);
+    transition: grid-template-columns 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .featured-item {
+    background: var(--section-dark-bg, #1c1c1c);
     position: relative;
     overflow: hidden;
-    height: 400px;
-    flex-shrink: 0;
-    flex-grow: 0;
-    flex-basis: 60px;
+    min-width: 60px;
     border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    transition: flex-basis 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.5s ease;
-    cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: background 0.3s, border 0.3s;
 }
 
-.featured-item:last-child {
-    border-right: none;
+.featured-item[data-active='true'] {
+    z-index: 2;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
 }
 
-/* Default state: First item expanded */
-.featured-grid:not(.is-active) .featured-item.is-default-open {
-    flex-basis: 400px;
-}
-
-/* Hover Logic using JS classes */
-.featured-grid.is-active .featured-item {
-    flex-basis: 60px;
-}
-
-.featured-grid.is-active .featured-item.is-hovered {
-    flex-basis: 400px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+.featured-item[data-active='false'] {
+    opacity: 0.7;
 }
 
 .featured-img {
@@ -472,30 +462,14 @@ aspect-ratio: 3/4;
 .featured-grid.is-active .featured-item.is-hovered .featured-img,
 .featured-grid:not(.is-active) .featured-item.is-default-open .featured-img {
     opacity: 1;
-    transform: scale(1.05);
 }
 
 /* Reset default open item's image if not hovered */
 .featured-grid.is-active .featured-item.is-default-open:not(.is-hovered) .featured-img {
     opacity: 0.4;
-    transform: scale(1);
 }
 
-/* Dark overlay for unfocused items */
-.featured-item::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    z-index: 1;
-}
 
-/* Show overlay on unfocused items */
-.featured-grid.is-active .featured-item:not(.is-hovered)::before {
-    opacity: 1;
-}
 
 .featured-item-content {
     position: absolute; 
@@ -504,7 +478,6 @@ aspect-ratio: 3/4;
     flex-direction: column; 
     justify-content: flex-end;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.5) 40%, rgba(0, 0, 0, 0) 100%);
-    pointer-events: none; 
     z-index: 1;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -515,6 +488,7 @@ aspect-ratio: 3/4;
 .featured-grid:not(.is-active) .featured-item.is-default-open .featured-item-content {
     opacity: 1;
     transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+    pointer-events: auto;
 }
 
 .featured-item-title {
@@ -554,7 +528,6 @@ aspect-ratio: 3/4;
 
 .featured-item-details {
     padding: 1.5rem; 
-    pointer-events: none;
     opacity: 0; 
     transform: translateY(20px);
     transition: opacity 0.3s ease, transform 0.3s ease;
@@ -601,6 +574,7 @@ aspect-ratio: 3/4;
     font-size: 0.8rem;
     transition: all 0.3s ease;
     pointer-events: auto;
+    display: inline-block;
 }
 
 .featured-item-link:hover {
