@@ -26,13 +26,17 @@ function initializeScrollEffects() {
 function initializeNavigation() {
     // Toggle mobile menu
     menuToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
+        const isOpen = navLinks.classList.toggle('active');
+        menuToggle.setAttribute('aria-expanded', isOpen.toString());
+        menuToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
     });
 
     // Close mobile menu when clicking on a link
     document.querySelectorAll('.nav-links a').forEach(link => {
         link.addEventListener('click', () => {
             navLinks.classList.remove('active');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.setAttribute('aria-label', 'Open navigation');
         });
     });
 
@@ -42,6 +46,8 @@ function initializeNavigation() {
             !navLinks.contains(e.target) && 
             !menuToggle.contains(e.target)) {
             navLinks.classList.remove('active');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.setAttribute('aria-label', 'Open navigation');
         }
     });
 
@@ -97,7 +103,9 @@ if (featuredGrid) {
     };
     featuredGrid.addEventListener('focus', setIndex, true);
     featuredGrid.addEventListener('click', setIndex);
-    featuredGrid.addEventListener('pointermove', setIndex);
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        featuredGrid.addEventListener('pointermove', setIndex);
+    }
 
     // Add event listener for mouseleave to remove classes and reset grid
     featuredGrid.addEventListener('mouseleave', () => {
