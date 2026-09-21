@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.cdnfonts.com/css/bicubik" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Sora:wght@700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
         <nav>
             <div class="logo">ASHISH SHAKYA</div>
-            <div class="nav-links">
+            <div class="nav-links" id="site-navigation">
                 <a href="#about">About</a>
                 <a href="#featured">Projects</a>
                 <a href="#portfolio">Portfolio</a>
@@ -23,9 +23,9 @@
             <div class="nav-hire-button">
                 <a href="#contact" class="navbar-cta">Hire Me</a>
             </div>
-            <div class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
+            <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-navigation">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
         </nav>
     </header>
 
@@ -51,8 +51,8 @@
                     </div>
                     <div class="about-text">
                         <h4>Hi, I'm Ashish Shakya</h4>
-                        <p>I'm an achievement-driven, responsible 3D artist based in New Delhi, India. With a passion for creating immersive digital experiences, I've developed expertise in various aspects of 3D modeling and animation.</p>
-                        <p>My journey in the world of 3D art has equipped me with skills in industry-standard software and techniques, allowing me to bring creative visions to life with precision and artistry.</p>
+                        <p>A 3D Artist based in New Delhi, India, focused on creating immersive visuals and imaginative digital experiences. My work spans 3D modeling, animation, look development, and visual storytelling, combining technical precision with a strong creative approach.</p>
+                        <p>With experience across different projects and workflows, I'm always exploring new techniques and pushing 3D beyond the expected—to create work that feels distinctive, detailed, and unforgettable.</p>
                         <!--div class="hero-buttons">
                             <a href="https://www.artstation.com/ashish_shakya" target="_blank" class="cta-button">View Portfolio</a>
                         </div-->
@@ -197,18 +197,17 @@
 
             </div> 
             </div>          
-            <div style="text-align: center; margin-top: 2rem;">
+            <div class="project-archive-link" style="text-align: center; margin-top: 2rem;">
                 <a href="https://www.artstation.com/ashish_shakya" target="_blank" class="cta-button">View All on ArtStation</a>
             </div>
         </section>
 
 
         <section id="skills" class="skills light">
-            <h2>Skills & Tools</h2>
             <div class="skills-content">
                 <div class="skills-grid">
                     <div class="software-category">
-                        <h3>Software & Tools</h3>
+                        <h3>Softwares</h3>
                         <div class="software-list">
                             <div class="software-item">
                                 <div class="software-icon"><i class="fas fa-cube"></i></div>
@@ -253,7 +252,7 @@
                         </div>
                     </div>
                     <div class="skills-category">
-                        <h3>Expertise Areas</h3>
+                        <h3>Expertise</h3>
                         <div class="skill-list">
                             <div class="skill">
                                 <div class="software-item">
@@ -285,6 +284,26 @@
                                     <h5>Rigging</h5>
                                 </div>
                             </div>
+                            <div class="skill">
+                                <div class="software-item">
+                                    <h5>Editing</h5>
+                                </div>
+                            </div>
+                            <div class="skill">
+                                <div class="software-item">
+                                    <h5>Motion Graphics</h5>
+                                </div>
+                            </div>
+                            <div class="skill">
+                                <div class="software-item">
+                                    <h5>Thumbnail Creator</h5>
+                                </div>
+                            </div>
+                            <div class="skill">
+                                <div class="software-item">
+                                    <h5>Videography</h5>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div> 
@@ -314,7 +333,7 @@
                     <h3>Interior Design</h3>
                 </div>
             </div>
-            </section>
+        </section>
             <!--section id="testimonials" class="testimonials dark">
             <h2>Testimonials</h2>
             <div class="testimonials-container">
